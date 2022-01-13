@@ -18,10 +18,23 @@ export const perspectiveSlice = createSlice({
   name: "perspective",
   initialState,
   reducers: {
-    openPanel: (state) => {
+    openPanel: (state, action: PayloadAction<string | undefined>) => {
+      const leftPanelId = action.payload;
+
       const id = nanoid(3);
       const panel = { label: "Panel-" + id, id };
-      state.panels = state.panels.concat(panel);
+
+      if (!leftPanelId) {
+        state.panels = state.panels.concat(panel);
+      } else {
+        // split
+        const leftPanelIndex = state.panels.findIndex(
+          (p) => p.id === leftPanelId
+        );
+        const head = state.panels.slice(0, leftPanelIndex + 1);
+        const tail = state.panels.slice(leftPanelIndex + 1);
+        state.panels = head.concat([panel]).concat(tail);
+      }
     },
     closePanel: (state, action: PayloadAction<string>) => {
       const newPanels = state.panels.filter((_p) => _p.id !== action.payload);

@@ -87,6 +87,12 @@ export default function SimpleContainer() {
                       >
                         Close Panel
                       </Button>
+                      <Button
+                        onClick={(e) => dispatch(openPanel(p.id))}
+                        variant="outlined"
+                      >
+                        Split
+                      </Button>
                     </div>
                   </Allotment.Pane>
                 ))}
